@@ -1,0 +1,37 @@
+﻿
+// Создание таблиц
+
+CREATE TABLE Person(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name VARCHAR
+    );
+    
+CREATE TABLE Info(
+    InfoID INTEGER PRIMARY KEY AUTOINCREMENT, 
+    Description VARCHAR,
+    Link VARCHAR,
+    PersonID INTEGER,
+    FOREIGN KEY (PersonID) REFERENCES Person(id) ON DELETE CASCADE
+    );
+    
+CREATE TABLE Images(
+    ImagesID INTEGER PRIMARY KEY AUTOINCREMENT,
+    Image BLOB,
+    PersonID INTEGER,
+    FOREIGN KEY (PersonID) REFERENCES Person(id) ON DELETE CASCADE
+    );
+
+
+    //Заполнение таблиц
+
+    INSERT INTO Person(name)
+    VALUES
+    ('Doctor David Livesey'),
+    ('John Silver'),
+    ('William "Billy" Bones');
+    
+INSERT INTO Info(Description, personID)
+    VALUES
+    ('Доктор Ливси', (SELECT id FROM Person WHERE Name LIKE '%Livesey%')),
+    ('Джон Сильвер', (SELECT id FROM Person WHERE Name LIKE '%Silver%')),
+    ('Билли Бон', (SELECT id FROM Person WHERE Name LIKE '%Bones%'));
